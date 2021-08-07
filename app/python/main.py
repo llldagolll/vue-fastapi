@@ -5,6 +5,21 @@ from starlette.middleware.cors import CORSMiddleware
 app=FastAPI()
 
 
+class MyPostData(BaseModel):
+    name: str
+    mean: str
+
+origins = [
+    "http://localhost:80",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # テスト用辞書
 test_data = {
@@ -19,7 +34,7 @@ async def index():
 
 @app.get("/data/")
 def read_data(key: str):
-return test_data[key]
+    return test_data[key]
 
 
 @app.post("/data/")
@@ -28,21 +43,7 @@ def update_data(post_data: MyPostData):
     return {"message": "post success!!"}
 
 
-class MyPostData(BaseModel):
-    name: str
-    mean: str
 
-origins = [
-    "http://localhost:80",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
 
 
     
