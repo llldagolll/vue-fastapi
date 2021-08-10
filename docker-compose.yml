@@ -24,3 +24,18 @@ services:
     tty: true
     volumes:
       - ./app/python:/app
+  db:
+    image: mariadb:latest
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: vue-fastapi-db
+      MYSQL_USER: fastapi
+      MYSQL_PASSWORD: secret
+      TZ: Asia/Tokyoa
+    volumes:
+    - ./db/data:/var/lib/mysql
+    - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./db/sql:/docker-entrypoint-initdb.d
+    ports:
+    - 3306:3306
