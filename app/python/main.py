@@ -46,7 +46,7 @@ def update_data(post_data: MyPostData):
 
 
 
-   #　ユーザー情報一覧取得
+   #　ユーザー報一覧取得
 @app.get("/test_users")
 def get_user_list():
     users = session.query(TestUserTable).all()
@@ -64,9 +64,9 @@ def get_user(user_id: int):
 # ユーザ情報登録
 @app.post("/test_users")
 def post_user(user: TestUser):
-    db_test_user = TestUser(name = user.name,
-                            email = user.email
-                            )
+
+    db_test_user = TestUserTable(name=user.name,
+                                email=user.email)
 
     session.add(db_test_user)
     session.commit()
