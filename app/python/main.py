@@ -1,10 +1,23 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
-from db import session
-from model import TestUserTable, TestUser
+from sqlalchemy.orm import Session
+from models import crud, tasks, schemas
+from models.database import session, ENGINE
+
+
 
 app=FastAPI()
+tasks.Base.metadata.create_all(bind=ENGINE)
+
+def get_db():
+    try:
+        db = session()
+        yield db
+    finally:
+        db.close()
+        print('closed database')
+
 
 
 class MyPostData(BaseModel):
@@ -46,43 +59,21 @@ def update_data(post_data: MyPostData):
 
 
 
-   #　ユーザー報一覧取得
-@app.get("/test_users")
-def get_user_list():
-    users = session.query(TestUserTable).all()
-    return users
 
+@app.get("/test_task")
+def get_task(db: Session = Depends(get_db)):
+    tasks = crud.get_tasks(db)
+    return tasks
 
-# ユーザー情報取得(id指定)
-@app.get("/test_users/{user_id}")
-def get_user(user_id: int):
-    user = session.query(TestUserTable).\
-        filter(TestUserTable.id == user_id).first()
-    return user
-
-
-# ユーザ情報登録
-@app.post("/test_users")
-def post_user(user: TestUser):
-
-    db_test_user = TestUserTable(name=user.name,
-                                email=user.email)
-
-    session.add(db_test_user)
-    session.commit()
-
-
-# ユーザ情報更新
-@app.put("/test_users/{user_id}")
-def put_users(user: TestUser, user_id: int):
-    target_user = session.query(TestUserTable).\
-        filter(TestUserTable.id == user_id).first()
-    target_user.name = user.name
-    target_user.email = user.email
-    session.commit() 
+@app.post("/test_task")
+def create_task(task: schemas.TestTaskCreate, db: Session = Depends(get_db)):
+    return crud.create_task(db=db, task=task)
 
 
 
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
     

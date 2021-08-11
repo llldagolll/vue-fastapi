@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine
-
-from models.task import Base
+from models.tasks import Base
 
 
 host = "db:3306"
