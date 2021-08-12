@@ -2,10 +2,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-host = "db:3306"
-db_name = "vue-fastapi-db"
-user = "fastapi"
-password = "secret"
+# host = "db:3306"
+# db_name = "vue-fastapi-db"
+# user = "fastapi"
+# password = "secret"
+
+
+host = "host.docker.internal:3307"
+db_name = "vue_fastapi_db"
+user = "root"
+password = "myjdbroot"
 
 DATABASE = 'mariadb://%s:%s@%s/%s?charset=utf8' % (
     user,

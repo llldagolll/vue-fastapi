@@ -8,7 +8,10 @@ class TestTaskBase(BaseModel):
 
 
 class TestTaskCreate(TestTaskBase):
-    pass 
+    pass
+    
+    class Config:
+        orm_mode = True
 
 
 class Task(TestTaskBase):
