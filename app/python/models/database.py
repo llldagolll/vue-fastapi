@@ -2,6 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
+
+#DBの接続先 いじっちゃだめ
+
 # host = "db:3306"
 # db_name = "vue-fastapi-db"
 # user = "fastapi"

@@ -1,7 +1,19 @@
 from typing import List
 from pydantic import BaseModel
 
-# モデル定義(apiのモデル) 
+# モデル定義(fastapiのモデル)
+# class テーブル名Base(BaseModel):
+#     使用するカラムを記述
+
+# class テーブル名処理名(テーブル名Base):
+#     pass
+
+#     class Config:
+#         orm_mode = True
+
+
+
+
 class TestTaskBase(BaseModel):
     name: str
     content: str
