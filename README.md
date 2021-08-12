@@ -23,6 +23,10 @@ https://dev.classmethod.jp/articles/operate-rds-of-private-subnet-from-the-local
 ## dockerをファイルから再構築
 docker-compose up -d --force-recreate --build
 
+## dockerをキャッシュを使わないでビルドする
+docker-compose build --no-cache
+https://hacknote.jp/archives/47137/
+
 ## ec2にmariadbをインストール
 https://qiita.com/PAmatsuti/items/ed89719a1f4f579bd01a
 
